@@ -1,15 +1,17 @@
 package com.example.madventure.composable.screen.onboarding.view
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -23,7 +25,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
     navController: NavHostController,
@@ -53,18 +55,22 @@ fun OnBoardingScreen(
             Column(
                 modifier = Modifier
                     .padding(horizontal = 65.dp)
-                    .padding(top = 82.dp, bottom = 35.dp)
+                    .padding(top = 42.dp, bottom = 35.dp)
                     .align(Alignment.TopCenter)
             ) {
-                HorizontalPager(
-                    count = items.size,
-                    modifier = Modifier
-                        .padding(horizontal = 200.dp)
-                        .weight(1f),
-                    state = pagerState
-                ) { index ->
-                    val page = items[index]
-                    PagerItemComponent(pagerItem = page, modifier = Modifier.fillMaxWidth())
+                CompositionLocalProvider(
+                    LocalOverscrollConfiguration provides null
+                ) {
+                    HorizontalPager(
+                        count = items.size,
+                        modifier = Modifier
+                            .padding(horizontal = 200.dp)
+                            .weight(1f),
+                        state = pagerState
+                    ) { index ->
+                        val page = items[index]
+                        PagerItemComponent(pagerItem = page, modifier = Modifier.fillMaxWidth())
+                    }
                 }
                 Spacer(modifier = Modifier.height(50.dp))
                 Row(

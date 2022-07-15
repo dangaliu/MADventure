@@ -35,19 +35,19 @@ fun PagerItemComponent(
             contentDescription = pagerItem.title,
             modifier = Modifier.size(450.dp)
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = pagerItem.title,
             fontFamily = gothamProFamily,
-            fontSize = 50.sp,
+            fontSize = 55.sp,
             fontWeight = FontWeight.Normal,
             color = Color.White
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(35.dp))
         Text(
             text = pagerItem.description,
             fontFamily = gothamProFamily,
-            fontSize = 25.sp,
+            fontSize = 30.sp,
             fontWeight = FontWeight.Normal,
             color = Color.White,
             textAlign = TextAlign.Center
