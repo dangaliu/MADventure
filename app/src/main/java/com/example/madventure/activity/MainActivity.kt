@@ -10,8 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import com.example.madventure.composable.screen.onboarding.viewmodel.OnBoardingViewModel
 import com.example.madventure.navigation.Navigation
 import com.example.madventure.ui.theme.MADventureTheme
 
@@ -30,10 +33,14 @@ class MainActivity : ComponentActivity() {
     fun App() {
         val navController = rememberNavController()
         val scaffoldState = rememberScaffoldState()
+        val context = LocalContext.current
+
+        val onBoardingViewModel = ViewModelProvider(this)[OnBoardingViewModel::class.java]
 
         Scaffold(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            scaffoldState = scaffoldState
         ) { paddingValues ->
             Box(
                 modifier = Modifier
@@ -41,7 +48,8 @@ class MainActivity : ComponentActivity() {
                     .fillMaxSize()
             ) {
                 Navigation(
-                    navController = navController
+                    navController = navController,
+                    onBoardingViewModel = onBoardingViewModel
                 )
             }
         }

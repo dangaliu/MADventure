@@ -26,3 +26,10 @@ val Typography = Typography(
     )
     */
 )
+
+val onBoardingBtn = TextStyle(
+    color = Primary,
+    fontFamily = gothamProFamily,
+    fontSize = 30.sp,
+    fontWeight = FontWeight.Normal
+)
