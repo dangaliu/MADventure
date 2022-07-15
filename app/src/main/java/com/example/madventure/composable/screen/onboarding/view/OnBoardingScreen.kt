@@ -64,7 +64,6 @@ fun OnBoardingScreen(
                     HorizontalPager(
                         count = items.size,
                         modifier = Modifier
-                            .padding(horizontal = 200.dp)
                             .weight(1f),
                         state = pagerState
                     ) { index ->

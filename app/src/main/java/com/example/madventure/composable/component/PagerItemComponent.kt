@@ -1,10 +1,7 @@
 package com.example.madventure.composable.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,7 +47,8 @@ fun PagerItemComponent(
             fontSize = 30.sp,
             fontWeight = FontWeight.Normal,
             color = Color.White,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = 200.dp)
         )
     }
 }
