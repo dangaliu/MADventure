@@ -36,7 +36,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion "1.2.0"
     }
     packagingOptions {
         resources {
@@ -88,4 +88,5 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
 }
