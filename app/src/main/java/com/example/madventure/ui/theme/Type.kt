@@ -1,6 +1,7 @@
 package com.example.madventure.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -28,8 +29,8 @@ val Typography = Typography(
 )
 
 val onBoardingBtn = TextStyle(
-    color = Primary,
+    color = Color.White,
     fontFamily = gothamProFamily,
-    fontSize = 30.sp,
+    fontSize = 28.sp,
     fontWeight = FontWeight.Normal
 )
