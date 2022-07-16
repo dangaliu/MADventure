@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.madventure.composable.screen.SplashScreen
+import com.example.madventure.composable.screen.authorization.view.AuthorizationScreen
 import com.example.madventure.composable.screen.onboarding.view.OnBoardingScreen
 import com.example.madventure.composable.screen.onboarding.viewmodel.OnBoardingViewModel
 
@@ -25,6 +26,9 @@ fun Navigation(
                 navController = navController,
                 vm = onBoardingViewModel
             )
+        }
+        composable(route = NavConstants.authorization) {
+            AuthorizationScreen(navController = navController)
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,12 +19,14 @@ import androidx.navigation.NavHostController
 import com.example.madventure.R
 import com.example.madventure.composable.component.PagerItemComponent
 import com.example.madventure.composable.screen.onboarding.viewmodel.OnBoardingViewModel
+import com.example.madventure.navigation.NavConstants
 import com.example.madventure.ui.theme.Primary
 import com.example.madventure.ui.theme.onBoardingBtn
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
@@ -33,6 +36,8 @@ fun OnBoardingScreen(
 ) {
     val items = vm.items
     val pagerState = rememberPagerState()
+    var isLastPage = pagerState.currentPage == pagerState.pageCount - 1
+    val scope = rememberCoroutineScope()
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -67,6 +72,7 @@ fun OnBoardingScreen(
                             .weight(1f),
                         state = pagerState
                     ) { index ->
+                        isLastPage = index == items.lastIndex
                         val page = items[index]
                         PagerItemComponent(pagerItem = page, modifier = Modifier.fillMaxWidth())
                     }
@@ -78,14 +84,20 @@ fun OnBoardingScreen(
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "Skip",
-                        style = onBoardingBtn.copy(color = Color.White),
-                        modifier = Modifier
-                            .clickable {
-
-                            }
-                    )
+                    if (!isLastPage) {
+                        Text(
+                            text = "Skip",
+                            style = onBoardingBtn.copy(color = Color.White),
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate(NavConstants.authorization) {
+                                        popUpTo(NavConstants.onboarding) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                        )
+                    }
                     Spacer(modifier = Modifier.weight(1f))
                     HorizontalPagerIndicator(
                         pagerState = pagerState,
@@ -93,14 +105,31 @@ fun OnBoardingScreen(
                         activeColor = Primary
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(
-                        text = "Next",
-                        style = onBoardingBtn,
-                        modifier = Modifier
-                            .clickable {
-
-                            }
-                    )
+                    if (isLastPage) {
+                        Text(
+                            text = "Done",
+                            style = onBoardingBtn,
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate(NavConstants.authorization) {
+                                        popUpTo(NavConstants.onboarding) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                        )
+                    } else {
+                        Text(
+                            text = "Next",
+                            style = onBoardingBtn,
+                            modifier = Modifier
+                                .clickable {
+                                    scope.launch {
+                                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                    }
+                                }
+                        )
+                    }
                 }
             }
         }
