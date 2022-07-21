@@ -14,7 +14,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationFactory
+import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationViewModel
 import com.example.madventure.composable.screen.onboarding.viewmodel.OnBoardingViewModel
+import com.example.madventure.model.AuthorizationModel
 import com.example.madventure.navigation.Navigation
 import com.example.madventure.ui.theme.MADventureTheme
 
@@ -37,6 +40,10 @@ class MainActivity : ComponentActivity() {
 
         val onBoardingViewModel = ViewModelProvider(this)[OnBoardingViewModel::class.java]
 
+        val authorizationModel = AuthorizationModel()
+        val authorizationFactory = AuthorizationFactory(authorizationModel)
+        val authorizationViewModel = ViewModelProvider(this, authorizationFactory)[AuthorizationViewModel::class.java]
+
         Scaffold(
             modifier = Modifier
                 .fillMaxSize(),
@@ -49,7 +56,8 @@ class MainActivity : ComponentActivity() {
             ) {
                 Navigation(
                     navController = navController,
-                    onBoardingViewModel = onBoardingViewModel
+                    onBoardingViewModel = onBoardingViewModel,
+                    authorizationViewModel = authorizationViewModel
                 )
             }
         }

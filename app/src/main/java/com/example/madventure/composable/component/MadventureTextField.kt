@@ -25,9 +25,10 @@ import com.example.madventure.ui.theme.gothamProFamily
 fun MadventureTextField(
     modifier: Modifier = Modifier.size(450.dp, 50.dp),
     isPassword: Boolean = false,
-    placeholder: String = "Email"
+    placeholder: String = "Email",
+    value: String
 ) {
-    var value by remember { mutableStateOf("") }
+    var value by remember { mutableStateOf(value) }
     var isActive by remember { mutableStateOf(false) }
     BasicTextField(
         value = value,
@@ -40,22 +41,28 @@ fun MadventureTextField(
         decorationBox = @Composable { innerTextField ->
             Column {
                 if (value.isEmpty()) {
-                    Text(
-                        text = placeholder,
-                        style = TextStyle(
-                            color = TextFieldColor,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Normal,
-                            fontFamily = gothamProFamily
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            text = placeholder,
+                            style = TextStyle(
+                                color = TextFieldColor,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Normal,
+                                fontFamily = gothamProFamily
+                            )
                         )
-                    )
+                        innerTextField()
+                    }
                     Spacer(modifier = Modifier.height(5.dp))
                 } else {
                     isActive = true
                     innerTextField()
                     Spacer(modifier = Modifier.height(5.dp))
                 }
-                Divider(color = if (isActive && value.isNotEmpty()) Primary else TextFieldColor, thickness = 2.dp)
+                Divider(
+                    color = if (isActive && value.isNotEmpty()) Primary else TextFieldColor,
+                    thickness = 2.dp
+                )
             }
         },
         textStyle = TextStyle(
@@ -64,7 +71,7 @@ fun MadventureTextField(
             fontWeight = FontWeight.Normal,
             fontFamily = gothamProFamily
         ),
-        cursorBrush = SolidColor(if (isActive) Primary else TextFieldColor),
+        cursorBrush = SolidColor(Primary),
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
     )
 }
@@ -74,6 +81,6 @@ fun MadventureTextField(
 fun MadventureTextFieldPreview() {
     var value by remember { mutableStateOf("") }
     Box(modifier = Modifier.padding(8.dp)) {
-        MadventureTextField()
+        MadventureTextField(value = value)
     }
 }

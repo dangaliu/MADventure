@@ -8,15 +8,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface MAD_API {
+interface MainApi {
     companion object {
         val instance = Retrofit.Builder()
             .baseUrl("http://wsk2019.mad.hakta.pro/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(MAD_API::class.java)
+            .create(MainApi::class.java)
     }
 
-    @POST
+    @POST("user/login")
     suspend fun login(@Body model: LoginModel): Response<LoginResponseModel>
 }

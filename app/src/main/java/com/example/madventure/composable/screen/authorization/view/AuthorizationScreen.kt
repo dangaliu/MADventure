@@ -10,11 +10,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import com.example.madventure.R
-import com.example.madventure.composable.component.AuthorizationBox
+import com.example.madventure.composable.component.MainBox
+import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationViewModel
 
 @Composable
 fun AuthorizationScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    vm: AuthorizationViewModel
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -26,6 +28,7 @@ fun AuthorizationScreen(
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-        AuthorizationBox()
+
+        MainBox(vm = vm)
     }
 }
