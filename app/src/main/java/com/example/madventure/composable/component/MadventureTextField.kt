@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,11 +24,10 @@ import com.example.madventure.ui.theme.gothamProFamily
 @Composable
 fun MadventureTextField(
     modifier: Modifier = Modifier.size(450.dp, 50.dp),
-    startValue: String = "",
     isPassword: Boolean = false,
     placeholder: String = "Email"
 ) {
-    var value by remember { mutableStateOf(startValue) }
+    var value by remember { mutableStateOf("") }
     var isActive by remember { mutableStateOf(false) }
     BasicTextField(
         value = value,
@@ -40,7 +41,7 @@ fun MadventureTextField(
             Column {
                 if (value.isEmpty()) {
                     Text(
-                        text = "Email",
+                        text = placeholder,
                         style = TextStyle(
                             color = TextFieldColor,
                             fontSize = 24.sp,
@@ -50,11 +51,11 @@ fun MadventureTextField(
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                 } else {
-                    isActive = false
+                    isActive = true
                     innerTextField()
                     Spacer(modifier = Modifier.height(5.dp))
                 }
-                Divider(color = if (isActive) Primary else TextFieldColor, thickness = 2.dp)
+                Divider(color = if (isActive && value.isNotEmpty()) Primary else TextFieldColor, thickness = 2.dp)
             }
         },
         textStyle = TextStyle(
@@ -63,7 +64,8 @@ fun MadventureTextField(
             fontWeight = FontWeight.Normal,
             fontFamily = gothamProFamily
         ),
-        cursorBrush = SolidColor(if (isActive) Primary else TextFieldColor)
+        cursorBrush = SolidColor(if (isActive) Primary else TextFieldColor),
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
     )
 }
 
@@ -72,8 +74,6 @@ fun MadventureTextField(
 fun MadventureTextFieldPreview() {
     var value by remember { mutableStateOf("") }
     Box(modifier = Modifier.padding(8.dp)) {
-        MadventureTextField(
-            startValue = value,
-        )
+        MadventureTextField()
     }
 }

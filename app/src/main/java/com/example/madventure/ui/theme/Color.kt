@@ -9,3 +9,5 @@ val Teal200 = Color(0xFF03DAC5)
 
 val Primary = Color(0xFF14C7AF)
 val TextFieldColor = Color(0xFF666666)
+val AppGray = Color(0xFF707070)
+val AppGrayDark = Color(0xFF2C2C2D)

@@ -43,7 +43,8 @@ fun MadventureButton(
             Icon(
                 painter = painterResource(id = icon),
                 contentDescription = "icon",
-                modifier = Modifier.size(39.dp)
+                modifier = Modifier.size(39.dp),
+                tint = Color.Unspecified
             )
             Spacer(modifier = Modifier.width(24.dp))
         } 
