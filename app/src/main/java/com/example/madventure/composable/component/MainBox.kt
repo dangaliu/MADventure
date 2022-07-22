@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavHostController
 import com.example.madventure.R
 import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationViewModel
 import com.example.madventure.composable.screen.authorization.viewmodel.ScreenState
@@ -25,7 +26,8 @@ import com.example.madventure.ui.theme.onBoardingBtn
 fun MainBox(
     modifier: Modifier = Modifier
         .width(650.dp),
-    vm: AuthorizationViewModel
+    vm: AuthorizationViewModel,
+    navHostController: NavHostController
 ) {
     Surface(
         modifier = modifier.height(
@@ -52,7 +54,7 @@ fun MainBox(
                 modifier = Modifier.fillMaxWidth()
             )
             when (vm.type.value) {
-                ScreenState.AUTHORIZATION -> Authorization(vm = vm)
+                ScreenState.AUTHORIZATION -> Authorization(vm = vm, navHostController)
                 ScreenState.REGISTRATION -> Registration(vm)
                 ScreenState.ACTIVATION -> Activation("", vm)
                 else -> null

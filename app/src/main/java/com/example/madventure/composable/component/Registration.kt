@@ -87,6 +87,7 @@ fun Registration(
         text = "Sign up",
         onClick = {
             viewModel.smsCode(SmsCodeModel(code, phone))
+            viewModel.changeScreenType(ScreenState.ACTIVATION)
         }
     )
     Spacer(modifier = Modifier.height(30.dp))

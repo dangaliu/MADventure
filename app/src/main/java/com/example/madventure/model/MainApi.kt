@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface MainApi {
     companion object {
@@ -23,4 +24,7 @@ interface MainApi {
 
     @POST("user/smsCode")
     suspend fun smsCode(@Body model: SmsCodeModel): Response<Any>
+
+    @PUT("user/activation")
+    suspend fun activation(@Body model: ActivationModel): Response<Any>
 }

@@ -26,15 +26,15 @@ fun MadventureTextField(
     modifier: Modifier = Modifier.size(450.dp, 50.dp),
     isPassword: Boolean = false,
     placeholder: String = "Email",
-    value: String
+    value: String,
+    onValueChange: (String) -> Unit = {}
 ) {
-    var value by remember { mutableStateOf(value) }
     var isActive by remember { mutableStateOf(false) }
     BasicTextField(
         value = value,
         modifier = modifier,
         onValueChange = {
-            value = it
+            onValueChange(it)
         },
         interactionSource = MutableInteractionSource(),
         singleLine = true,

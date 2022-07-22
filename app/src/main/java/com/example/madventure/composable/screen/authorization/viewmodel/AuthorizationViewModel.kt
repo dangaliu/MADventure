@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.madventure.model.ActivationModel
 import com.example.madventure.model.AuthorizationModel
 import com.example.madventure.model.dto.SmsCodeModel
 import com.example.madventure.model.dto.authorization.LoginModel
@@ -59,6 +60,15 @@ class AuthorizationViewModel(
             } else {
                 Log.d("smsCode", response.code().toString() + response.message())
             }
+        }
+    }
+
+    fun activation(model: ActivationModel) {
+        viewModelScope.launch {
+            var response = authorizationModel.activation(model)
+            if (response.isSuccessful) {
+                Log.d("activation", response.code().toString())
+            } else Log.d("activation", response.code().toString() + response.message())
         }
     }
 

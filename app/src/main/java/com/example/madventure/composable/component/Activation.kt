@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationViewModel
+import com.example.madventure.model.ActivationModel
 import com.example.madventure.model.AuthorizationModel
 import com.example.madventure.ui.theme.Primary
 import com.example.madventure.ui.theme.TextFieldColor
@@ -39,9 +40,9 @@ fun Activation(
     var code by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-//    LaunchedEffect(Unit) {
-//        focusRequester.requestFocus()
-//    }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     val timerValue: Long = viewModel.timerValue.observeAsState(0L).value
 
@@ -73,7 +74,10 @@ fun Activation(
         value = code,
         onValueChange = {
             code = it
-            if (code.length == 4) focusManager.clearFocus()
+            if (code.length == 4) {
+                focusManager.clearFocus()
+                viewModel.activation(ActivationModel(code))
+            }
         },
         decorationBox = { innerTextField ->
             Column {
@@ -100,7 +104,7 @@ fun Activation(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = if (code.length > 1) code[0].toString() else "",
+                            text = if (code.length > 1) code[1].toString() else "",
                             style = codeStyle
                         )
                         Divider(
@@ -114,7 +118,7 @@ fun Activation(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = if (code.length > 2) code[0].toString() else "",
+                            text = if (code.length > 2) code[2].toString() else "",
                             style = codeStyle
                         )
                         Divider(
@@ -128,7 +132,7 @@ fun Activation(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = if (code.length > 3) code[0].toString() else "",
+                            text = if (code.length > 3) code[3].toString() else "",
                             style = codeStyle
                         )
                         Divider(
@@ -164,6 +168,7 @@ fun Activation(
         color = if (timerValue == 0L) Primary else codeStyle.color,
         modifier = if (timerValue == 0L) Modifier.clickable {
             viewModel.startTimer()
+            code = ""
         } else Modifier
     )
 }

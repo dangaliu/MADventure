@@ -12,4 +12,7 @@ class AuthorizationModel {
 
     suspend fun smsCode(model: SmsCodeModel): Response<Any> =
         MainApi.instance.smsCode(model)
+
+    suspend fun activation(model: ActivationModel): Response<Any> =
+        MainApi.instance.activation(model)
 }

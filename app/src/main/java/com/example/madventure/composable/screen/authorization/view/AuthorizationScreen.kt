@@ -29,6 +29,6 @@ fun AuthorizationScreen(
             contentScale = ContentScale.Crop
         )
 
-        MainBox(vm = vm)
+        MainBox(vm = vm, navHostController = navController)
     }
 }
