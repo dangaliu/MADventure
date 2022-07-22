@@ -23,7 +23,8 @@ fun MainBox(
     modifier: Modifier = Modifier
         .width(650.dp)
 //        .height(637.dp),
-        .height(760.dp),
+//        .height(760.dp),
+        .height(485.dp),
     vm: AuthorizationViewModel
 ) {
     Surface(
@@ -44,7 +45,8 @@ fun MainBox(
                 modifier = Modifier.fillMaxWidth()
             )
 //            Authorization(vm = vm)
-            Registration()
+//            Registration()
+            Activation()
         }
     }
 }
