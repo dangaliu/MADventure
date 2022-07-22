@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -22,6 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationViewModel
+import com.example.madventure.model.AuthorizationModel
 import com.example.madventure.ui.theme.Primary
 import com.example.madventure.ui.theme.TextFieldColor
 import com.example.madventure.ui.theme.gothamProFamily
@@ -30,7 +33,8 @@ import kotlin.concurrent.timer
 
 @Composable
 fun Activation(
-    number: String = "+7 999 223 43 23"
+    number: String = "+7 999 223 43 23",
+    viewModel: AuthorizationViewModel
 ) {
     var code by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
@@ -39,18 +43,10 @@ fun Activation(
 //        focusRequester.requestFocus()
 //    }
 
-    var timerValue: Long by remember { mutableStateOf(300000) }
+    val timerValue: Long = viewModel.timerValue.observeAsState(0L).value
 
     LaunchedEffect(Unit) {
-        object : CountDownTimer(300000, 1000) {
-            override fun onTick(p0: Long) {
-                timerValue = (p0 / 1000)
-            }
-
-            override fun onFinish() {
-
-            }
-        }.start()
+        viewModel.startTimer()
     }
 
     val scope = rememberCoroutineScope()
@@ -166,7 +162,9 @@ fun Activation(
         text = "Send code again",
         style = codeStyle,
         color = if (timerValue == 0L) Primary else codeStyle.color,
-        modifier = if (timerValue == 0L) Modifier.clickable {} else Modifier
+        modifier = if (timerValue == 0L) Modifier.clickable {
+            viewModel.startTimer()
+        } else Modifier
     )
 }
 
@@ -182,7 +180,7 @@ fun ActivationPreview() {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Activation()
+            Activation(viewModel = AuthorizationViewModel(AuthorizationModel()))
         }
     }
 }

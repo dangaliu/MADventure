@@ -1,5 +1,6 @@
 package com.example.madventure.model
 
+import com.example.madventure.model.dto.SmsCodeModel
 import com.example.madventure.model.dto.authorization.LoginModel
 import com.example.madventure.model.dto.authorization.LoginResponseModel
 import retrofit2.Response
@@ -19,4 +20,7 @@ interface MainApi {
 
     @POST("user/login")
     suspend fun login(@Body model: LoginModel): Response<LoginResponseModel>
+
+    @POST("user/smsCode")
+    suspend fun smsCode(@Body model: SmsCodeModel): Response<Any>
 }

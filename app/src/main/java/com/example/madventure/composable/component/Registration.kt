@@ -7,11 +7,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationViewModel
+import com.example.madventure.composable.screen.authorization.viewmodel.ScreenState
+import com.example.madventure.model.AuthorizationModel
+import com.example.madventure.model.dto.SmsCodeModel
 import com.example.madventure.ui.theme.Primary
 import com.example.madventure.ui.theme.onBoardingBtn
 
 @Composable
-fun Registration() {
+fun Registration(
+    viewModel: AuthorizationViewModel
+) {
     val email by remember { mutableStateOf("") }
     val nickname by remember { mutableStateOf("") }
     val code by remember { mutableStateOf("") }
@@ -76,11 +82,11 @@ fun Registration() {
     Spacer(modifier = Modifier.height(30.dp))
     MadventureButton(
         modifier = Modifier
-            .height(50.dp)
+            .height(70.dp)
             .fillMaxWidth(),
         text = "Sign up",
         onClick = {
-
+            viewModel.smsCode(SmsCodeModel(code, phone))
         }
     )
     Spacer(modifier = Modifier.height(30.dp))
@@ -88,7 +94,7 @@ fun Registration() {
         text = "Sign in",
         style = onBoardingBtn.copy(color = Primary),
         modifier = Modifier.clickable {
-
+            viewModel.changeScreenType(ScreenState.AUTHORIZATION)
         }
     )
 }
@@ -99,6 +105,6 @@ fun RegistrationPreview() {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        Registration()
+        Registration(AuthorizationViewModel(AuthorizationModel()))
     }
 }

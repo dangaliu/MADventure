@@ -1,5 +1,6 @@
 package com.example.madventure.composable.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.madventure.R
 import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationViewModel
+import com.example.madventure.composable.screen.authorization.viewmodel.ScreenState
 import com.example.madventure.model.dto.authorization.LoginModel
 import com.example.madventure.ui.theme.onBoardingBtn
 
@@ -58,6 +60,9 @@ fun Authorization(
     Spacer(modifier = Modifier.height(66.dp))
     Text(
         text = "Sign up",
-        style = onBoardingBtn
+        style = onBoardingBtn,
+        modifier = Modifier.clickable {
+            vm.changeScreenType(ScreenState.REGISTRATION)
+        }
     )
 }

@@ -6,12 +6,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.MutableLiveData
 import com.example.madventure.R
 import com.example.madventure.composable.screen.authorization.viewmodel.AuthorizationViewModel
+import com.example.madventure.composable.screen.authorization.viewmodel.ScreenState
 import com.example.madventure.model.AuthorizationModel
 import com.example.madventure.model.dto.authorization.LoginModel
 import com.example.madventure.ui.theme.AppGray
@@ -21,14 +24,18 @@ import com.example.madventure.ui.theme.onBoardingBtn
 @Composable
 fun MainBox(
     modifier: Modifier = Modifier
-        .width(650.dp)
-//        .height(637.dp),
-//        .height(760.dp),
-        .height(485.dp),
+        .width(650.dp),
     vm: AuthorizationViewModel
 ) {
     Surface(
-        modifier = modifier,
+        modifier = modifier.height(
+            when (vm.type.value) {
+                ScreenState.AUTHORIZATION -> 710.dp
+                ScreenState.REGISTRATION -> 760.dp
+                ScreenState.ACTIVATION -> 485.dp
+                else -> 0.dp
+            }
+        ),
         shape = RoundedCornerShape(24.dp),
         color = AppGrayDark
     ) {
@@ -44,9 +51,13 @@ fun MainBox(
                 contentDescription = "logo",
                 modifier = Modifier.fillMaxWidth()
             )
-//            Authorization(vm = vm)
-//            Registration()
-            Activation()
+            when (vm.type.value) {
+                ScreenState.AUTHORIZATION -> Authorization(vm = vm)
+                ScreenState.REGISTRATION -> Registration(vm)
+                ScreenState.ACTIVATION -> Activation("", vm)
+                else -> null
+            }
+
         }
     }
 }

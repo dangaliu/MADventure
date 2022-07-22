@@ -1,19 +1,30 @@
 package com.example.madventure.composable.screen.authorization.viewmodel
 
+import android.os.CountDownTimer
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.madventure.model.AuthorizationModel
+import com.example.madventure.model.dto.SmsCodeModel
 import com.example.madventure.model.dto.authorization.LoginModel
 import kotlinx.coroutines.launch
 import kotlin.math.log
 
 class AuthorizationViewModel(
     private val authorizationModel: AuthorizationModel
-): ViewModel() {
+) : ViewModel() {
 
     var token = MutableLiveData<String>()
+    var timerValue = MutableLiveData<Long>()
+
+    var type: MutableState<ScreenState> = mutableStateOf(ScreenState.REGISTRATION)
+
+    fun changeScreenType(newType: ScreenState) {
+        type.value = newType
+    }
 
     fun login(model: LoginModel) {
         viewModelScope.launch {
@@ -27,4 +38,32 @@ class AuthorizationViewModel(
             }
         }
     }
+
+    fun startTimer() {
+        object : CountDownTimer(300000, 1000) {
+            override fun onTick(p0: Long) {
+                timerValue.value = (p0 / 1000)
+            }
+
+            override fun onFinish() {
+
+            }
+        }.start()
+    }
+
+    fun smsCode(model: SmsCodeModel) {
+        viewModelScope.launch {
+            val response = authorizationModel.smsCode(model)
+            if (response.isSuccessful) {
+                Log.d("smsCode", response.code().toString())
+            } else {
+                Log.d("smsCode", response.code().toString() + response.message())
+            }
+        }
+    }
+
+}
+
+enum class ScreenState {
+    AUTHORIZATION, REGISTRATION, ACTIVATION
 }
